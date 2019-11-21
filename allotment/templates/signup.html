@@ -1,0 +1,22 @@
+{% block content %}
+  <h2>Party Sign Up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {% if 'username' in field.label_tag %}
+          Party Name:
+        {% else %}
+         {{ field.label_tag }}
+        {% endif %}
+        <br>
+        {{ field }}
+
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}
