@@ -6,6 +6,15 @@ from django.shortcuts import render, redirect
 from allotment.models import Party
 
 
+def home(request):
+    if request.method == 'POST':
+        if 'login' in request.POST:
+            return redirect('login')
+        elif 'signup' in request.POST:
+            return redirect('signup')
+    return render(request, 'home.html', {})
+
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

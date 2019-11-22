@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-xs-6 col-sm-4"></div>
       <div class="col-xs-6 col-sm-4">
-        <h2 style="text-align:center">Party Sign Up</h2>
+        <h2 style="text-align:center">Party Login</h2>
         <form method="post">
           {% csrf_token %}
           {% for field in form %}
@@ -18,14 +18,13 @@
               {% endif %}
               <br>
               {{ field }}
-
-              {% for error in field.errors %}
-                <p style="color:red; text-align:center">{{ error }}</p>
-              {% endfor %}
             </p>
           {% endfor %}
+          {% if form.errors %}
+            <p style="color:red; text-align:center">Invalid party/passowrd pair.</p>
+          {% endif %}
           <div style="text-align:center">
-            <button type="submit">Sign up</button>
+            <button type="submit">Login</button>
           </div>
         </form>
       </div>
