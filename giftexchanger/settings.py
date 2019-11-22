@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 't4i78y@_&fl^4%golu!g2tw6x58zw@dmus1zr0#==mr!!vfx!p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['giftexchanger.org', 'www.giftexchanger.org']
 
 
 # Application definition

@@ -4,27 +4,22 @@
   {{ block.super }}
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-6 col-sm-4"></div>
-      <div class="col-xs-6 col-sm-4">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h1 style="text-align:center">
           Gift Exchanger
         </h1>
         <br>
       </div>
-      <div class="col-xs-6 col-sm-4"></div>
     </div>
     <div class="row">
-      <div class="col-xs-6 col-sm-4"></div>
-      <div class="col-xs-6 col-sm-4">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <p style="text-align:center">
           a fair, anonymous, independently verifiable gift exchange protocol
         </p>
       </div>
-      <div class="col-xs-6 col-sm-4"></div>
     </div>
     <div class="row">
-      <div class="col-xs-6 col-sm-4"></div>
-      <div class="col-xs-6 col-sm-4">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <form method="post">
           {% csrf_token %}
           <div style="text-align:center">
@@ -33,7 +28,6 @@
             <button type="submit" name="signup" style="background-color:lightgreen">Sign up</button>
           </div>
         </form>
-      <div class="col-xs-6 col-sm-4"></div>
     </div>
   </div>
 {% endblock %}
