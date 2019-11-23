@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  {{ block.super }}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div style="text-align:center">
+          <textarea id="random-id" rows="5" cols="50"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div style="text-align:center">
+          <br>
+          <button type="button" onclick="genPrivate()">Generate</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div style="text-align:center">
+          <br>
+          <textarea id="private-id" rows="1" cols="64" style="text-align:center"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="{% static 'sha256.js' %}"></script>
+  <script src="{% static 'BigInteger.js' %}"></script>
+
+  <script type="text/javascript">
+    function genPrivate() {
+      var input_rand = document.getElementById("random-id").value;
+      var hash = SHA256(input_rand);
+      var private_key_int = bigInt(hash, 16)
+      var private_key_base64 = private_key_int.toString(58, "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz");
+      document.getElementById("private-id").value = private_key_base64;
+    }
+  </script>
+
+{% endblock %}

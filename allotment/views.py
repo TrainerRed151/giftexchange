@@ -42,3 +42,11 @@ def party_view(request):
     }
 
     return render(request, 'party.html', ctx)
+
+
+@login_required
+def public_key_create(request):
+    if request.method == 'POST':
+        import ipdb; ipdb.set_trace()
+
+    return render(request, 'public_key.html', {})
