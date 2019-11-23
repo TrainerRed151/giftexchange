@@ -1,9 +1,10 @@
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from allotment.models import Party
+from allotment.models import Participant, Party
 
 
 def home(request):
@@ -31,5 +32,13 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
+@login_required
 def party_view(request):
-    return HttpResponse('Party view')
+    party = Party.objects.get(credentials=request.user)
+    participants = Participant.objects.filter(party=party)
+    ctx = {
+        'participants': participants,
+        'party_name': party.credentials.username,
+    }
+
+    return render(request, 'party.html', ctx)

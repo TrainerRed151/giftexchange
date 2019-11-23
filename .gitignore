@@ -41,7 +41,7 @@ Thumbs.db
 ## local settings, static and tmp folders ##
 local_settings.py
 /tmp
-/static_root
+/static
 
 ## virtual environments ##
 venv
