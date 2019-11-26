@@ -3,12 +3,15 @@
 {% block content %}
   {{ block.super }}
   <div class="container-fluid">
-    <div class="row">
+    <sdiv class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h2 style="text-align:center">{{ party_name }}</h2>
         <br>
         <br>
-        <table style="width:75%; text-align:center">
+        <a href="{{ gen_key_url }}" class="btn btn-secondary" role="button">Add Participant</a>
+        <br>
+        <br>
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>Public Key</th>

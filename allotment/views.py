@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from allotment.models import Participant, Party
 
@@ -44,6 +45,7 @@ def party_view(request):
         public_key = base58.b58encode(participant.public_key[:32]).decode()
         participant_tuples.append((public_key, participant.recipient_cipher))
     ctx = {
+        'gen_key_url': reverse('public_key'),
         'participants': participant_tuples,
         'party_name': party.credentials.username,
     }
