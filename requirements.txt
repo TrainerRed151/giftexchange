@@ -2,3 +2,4 @@ django
 ipython
 ipdb
 gunicorn
+base58

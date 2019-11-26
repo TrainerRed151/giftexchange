@@ -4,9 +4,19 @@
 {% block content %}
   {{ block.super }}
   <div class="container-fluid">
+    {% if invalid %}
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <p style="text-align:center; color:red">
+            Public Key is missing or Private Key is too simple
+          </p>
+        </div>
+      </div>
+    {% endif %}
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center">
+          <p>Enter random text (at least 32 characters)</p>
           <textarea id="random-id" rows="5" cols="50"></textarea>
         </div>
       </div>
@@ -23,8 +33,29 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div style="text-align:center">
           <br>
+          <p>Private Key - record this number and keep it secret</p>
           <textarea id="private-id" rows="1" cols="64" style="text-align:center"></textarea>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div style="text-align:center">
+          <br>
+          <p>Public Key</p>
+          <textarea id="public-id" rows="1" cols="104" style="text-align:center"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form method="post">
+          {% csrf_token %}
+          <div style="text-align:center">
+            <br>
+            <button id="submit-id" type="submit" name="submit">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -32,15 +63,25 @@
 
   <script src="{% static 'sha256.js' %}"></script>
   <script src="{% static 'BigInteger.js' %}"></script>
+  <script src="{% static 'ECC.js' %}"></script>
 
   <script type="text/javascript">
     function genPrivate() {
       var input_rand = document.getElementById("random-id").value;
       var hash = SHA256(input_rand);
       var private_key_int = bigInt(hash, 16)
-      var private_key_base64 = private_key_int.toString(58, "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz");
-      document.getElementById("private-id").value = private_key_base64;
+      var private_key_base58 = private_key_int.toString(58, alphabet);
+
+      document.getElementById("private-id").value = private_key_base58;
+      getPublic(private_key_int.value);
     }
+
+    function getPublic(k) {
+      public_key_base58 = genPub(k);
+      document.getElementById("public-id").value = public_key_base58;
+      document.getElementById("submit-id").value = public_key_base58;
+    } 
+
   </script>
 
 {% endblock %}

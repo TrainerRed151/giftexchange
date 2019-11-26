@@ -618,7 +618,8 @@ var bigInt = (function (undefined) {
         return divModAny(this, v)[1];
     };
     NativeBigInt.prototype.mod = NativeBigInt.prototype.remainder = function (v) {
-        return new NativeBigInt(this.value % parseValue(v).value);
+        var pv = parseValue(v).value;
+        return new NativeBigInt(((this.value % pv) + pv) % pv);
     };
     SmallInteger.prototype.remainder = SmallInteger.prototype.mod = BigInteger.prototype.remainder = BigInteger.prototype.mod;
 

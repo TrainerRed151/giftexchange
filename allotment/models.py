@@ -10,7 +10,7 @@ class Party(models.Model):
 
 class Participant(models.Model):
     party = models.ForeignKey(Party, on_delete=models.CASCADE)
-    public_key = models.BinaryField(null=True, blank=True, max_length=32, unique=True)
+    public_key = models.BinaryField(null=True, blank=True, max_length=64, unique=True)
     permutation_commitment = models.BinaryField(null=True, blank=True, max_length=32)
     permutation_number = models.BinaryField(null=True, blank=True, max_length=32)
     gifter_obj = models.ForeignKey('self', null=True, blank=True, related_name='gifter', on_delete=models.SET_NULL)

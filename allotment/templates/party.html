@@ -6,10 +6,24 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h2 style="text-align:center">{{ party_name }}</h2>
-        {% for participant in participants %}
-          <p>{{ participant }}</p>
-          <br>
-        {% endfor %}
+        <br>
+        <br>
+        <table style="width:75%; text-align:center">
+          <thead>
+            <tr>
+              <th>Public Key</th>
+              <th>Ciphertext</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for public_key, cipher in participants %}
+              <tr>
+                <td>{{ public_key }}</th>
+                <td>{{ cipher }}</th>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
