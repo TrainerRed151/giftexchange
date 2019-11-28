@@ -57,10 +57,16 @@ def party_view(request):
 def public_key_create(request):
     empty_hash_key = 'BzSKPETSwTq4hrPHLrNwDQvutqrZjkXPXEPFJyxPpCMJ/7APcr4LnGUq8PkrscSSmwZutr9oxAqkLFRis5u4FexNp'
 
-    ctx = {'invalid': False}
+    ctx = {
+        'invalid': False,
+        'confirm_error': False,
+    }
+
     if request.method == 'POST':
         public_key = request.POST['submit']
-        if public_key in ('', '1/1', empty_hash_key):
+        if '!' in public_key:
+            ctx['confirm_error'] = True
+        elif public_key in ('', '1/1', empty_hash_key):
             ctx['invalid'] = True
         else:
             x58, y58 = public_key.split('/')
