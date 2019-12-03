@@ -15,7 +15,7 @@ class Participant(models.Model):
     permutation_number = models.BinaryField(null=True, blank=True, max_length=32)
     gifter_obj = models.ForeignKey('self', null=True, blank=True, related_name='gifter', on_delete=models.SET_NULL)
     recipient_obj = models.ForeignKey('self', null=True, blank=True, related_name='recipient', on_delete=models.SET_NULL)
-    recipient_cipher = models.CharField(max_length=64)
+    recipient_cipher = models.CharField(max_length=4096)
     recipient_plaintext = models.CharField(max_length=64)
 
     unique_together = ('party', 'public_key')

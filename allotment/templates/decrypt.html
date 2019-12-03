@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  {{ block.super }}
+  <div class="container-fluid">
+    {% if bad_passwd %}
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <p style="text-align:center; color:red">
+            Incorrect password
+          </p>
+        </div>
+      </div>
+    {% endif %}
+    {% if empty_msg %}
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <p style="text-align:center; color:red">
+            Your gift recipient has not yet left you a message
+          </p>
+        </div>
+      </div>
+    {% endif %}
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <p style="text-align:center">
+          Enter the password you used to generate your public key and press Submit.  The message your gift recipient sent you will be displayed in the Message textbox below.
+        </p>
+        <br><br>
+        <div class="form-group">
+          <label for="pwd-id">Password:</label>
+          <input id="pwd-id" type="password" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div style="text-align:center">
+          <br>
+          <button type="button" onclick="decryptMsg({{ x_list }}, {{ y_list }}, {{ cipher_list }})">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <br><br>
+          <label for="message-id">Message:</label>
+          <input id="message-id" class="form-control"></input>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form id="form-id" method="post">
+          {% csrf_token %}
+          <input id="error-id" type="hidden" name="error"></input>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="{% static 'sha256.js' %}"></script>
+  <script src="{% static 'BigInteger.js' %}"></script>
+  <script src="{% static 'ECC.js' %}"></script>
+  <script src="{% static 'aes.js' %}"></script>
+
+  <script type="text/javascript">
+    function decryptMsg(x_array, y_array, cipher_array) {
+      var input_pass = document.getElementById("pwd-id").value;
+      var hash = SHA256(input_pass);
+      var private_key_int = bigInt(hash, 16).value;
+      var public_key_base58 = genPub(private_key_int).split("/")[0];
+      var public_key_hex = bigInt(public_key_base58, 58, alphabet, true).value.toString(16);
+      var pub_index = x_array.indexOf(public_key_hex);
+      var cipher_hex = cipher_array[pub_index];
+      if (pub_index == -1) {
+        document.getElementById("error-id").value = "!";
+        document.getElementById("form-id").submit();
+      }
+      else if (cipher_hex["length"] == 0) {
+        document.getElementById("error-id").value = "?";
+        document.getElementById("form-id").submit();
+      }
+      else {
+        var list_len = x_array["length"];
+        var rec_index = (pub_index + list_len - 1) % list_len;
+        var rec_x = bigInt(x_array[rec_index], 16).value
+        var rec_y = bigInt(y_array[rec_index], 16).value
+        var secret_hex = ecdh(rec_x, rec_y, private_key_int);
+        var secret_array = aesjs.utils.hex.toBytes(secret_hex);
+        var cipher_bytes = aesjs.utils.hex.toBytes(cipher_hex);
+        var aes_obj = new aesjs.ModeOfOperation.ctr(secret_array);
+        var text_bytes = aes_obj.decrypt(cipher_bytes);
+        var text = aesjs.utils.utf8.fromBytes(text_bytes);
+        document.getElementById("message-id").value = text;
+      }
+    }
+
+  </script>
+
+{% endblock %}

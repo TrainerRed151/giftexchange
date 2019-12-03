@@ -84,6 +84,12 @@ secp256k1 = new Curve(
 
 function genPub(k) {
     var gp = new Point(secp256k1.G, secp256k1);
-    q = gp.dbladd(k)
+    var q = gp.dbladd(k)
     return bigInt(q.x).toString(58, alphabet) + "/" + bigInt(q.y).toString(58, alphabet);
+}
+
+function ecdh(x, y, k) {
+    var pub = new Point([x, y], secp256k1);
+    var secret = pub.dbladd(k);
+    return bigInt(secret.x).toString(16);
 }
