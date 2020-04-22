@@ -1,3 +1,9 @@
+/**
+ * Secure Hash Algorithm
+ * http://www.webtoolkit.info/
+ * Original code by Angel Marin, Paul Johnston
+ */
+
 function SHA256(s) {
     var chrsz  = 8;
     var hexcase = 0;

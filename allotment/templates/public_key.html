@@ -40,24 +40,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div style="text-align:center">
-          <br>
-          <button type="button" onclick="genPublic()">Generate</button>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="form-group">
-          <br><br>
-          <label for="public-id">Public Key:</label>
-          <input id="public-id" class="form-control"></input>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form method="post">
+        <form method="post" onsubmit="genPublic()">
           {% csrf_token %}
           <div style="text-align:center">
             <br>
@@ -84,7 +67,6 @@
       var hash = SHA256(input_pass);
       var private_key_int = bigInt(hash, 16).value;
       public_key_base58 = genPub(private_key_int);
-      document.getElementById("public-id").value = public_key_base58;
       document.getElementById("submit-id").value = public_key_base58 + pass_error;
     }
 
