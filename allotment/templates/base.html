@@ -11,19 +11,19 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <div class="col-6">
         <img src="{% static "gift.svg" %}" class="float-left" height=64px width=64px>
       </div>
 
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        <div class="dropdown" style="margin-top:10px">
-          <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div class="col-6">
+        <div class="dropleft float-right" style="margin-top:10px">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Menu
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="{% url 'home' %}">Home</a>
+            <a class="dropdown-item" href="{% url 'party_view' %}">Party</a>
+            <a class="dropdown-item" href="#">Logout</a>
           </div>
         </div>
       </div>
